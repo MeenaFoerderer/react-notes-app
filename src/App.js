@@ -1,6 +1,7 @@
 import NotesList from "./components/NotesList";
 import { useState } from "react";
 import {nanoid} from 'nanoid';
+import { MdOutlineNetworkPing } from "react-icons/md";
 
 function App() {
   const [notes, setNotes] = useState([
@@ -8,27 +9,24 @@ function App() {
       id: nanoid(),
       text: "This is the first note",
       date: "21/03/2023"
-    },
-    {
-      id: nanoid(),
-      text: "This is the second note",
-      date: "22/03/2023"
-    },
-    {
-      id: nanoid(),
-      text: "This is the third note",
-      date: "23/03/2023"
-    },
-    {
-      id: nanoid(),
-      text: "This is the fourth note",
-      date: "24/03/2023"
-    },
+    }
   ]);
+
+  const addNote = (text) => {
+    const date = new Date();
+    const newNote = {
+      id: nanoid(),
+      text: text,
+      date: date.toLocaleDateString()
+    }
+
+    const newNotes = [...notes, newNote];
+    setNotes(newNotes);
+  }
 
   return (
     <div className="container">
-      <NotesList notes={notes}/>
+      <NotesList notes={notes} handleAddNote={addNote}/>
     </div>
   );
 }
