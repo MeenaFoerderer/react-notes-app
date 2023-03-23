@@ -2,6 +2,7 @@ import NotesList from "./components/NotesList";
 import { useState } from "react";
 import {nanoid} from 'nanoid';
 import { MdOutlineNetworkPing } from "react-icons/md";
+import Search from "./components/Search";
 
 function App() {
   const [notes, setNotes] = useState([
@@ -11,6 +12,8 @@ function App() {
       date: "21/03/2023"
     }
   ]);
+
+  const [searchText, setSearchText] = useState('');
 
   const addNote = (text) => {
     const date = new Date();
@@ -31,7 +34,11 @@ function App() {
 
   return (
     <div className="container">
-      <NotesList notes={notes} handleAddNote={addNote} handleDeleteNote={deleteNote}/>
+      <Search handleSearchNote={setSearchText}/>
+      <NotesList 
+        notes={notes.filter((note) => note.text.toLowerCase().includes(searchText))} 
+        handleAddNote={addNote} 
+        handleDeleteNote={deleteNote}/>
     </div>
   );
 }
